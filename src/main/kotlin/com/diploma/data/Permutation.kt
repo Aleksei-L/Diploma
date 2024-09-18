@@ -1,5 +1,10 @@
 package com.diploma.data
 
+/**
+ * Класс представляющий перестановку из n элементов
+ *
+ * [numbersList] - список, хранящий n элементов
+ */
 data class Permutation(val numbersList: List<Int>) {
 	override fun toString(): String {
 		var res = "("
