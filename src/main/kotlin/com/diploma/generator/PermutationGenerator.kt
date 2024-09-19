@@ -1,12 +1,17 @@
-package com.diploma.generators
+package com.diploma.generator
 
 import com.diploma.data.Permutation
 
 class PermutationGenerator {
 	/**
-	 * Функция генерации всех n! перестановок
+	 * Функция генерации всех `n!` перестановок
 	 *
-	 * taskNumber - кол-во задач для исполнителя (n)
+	 * Перестановка будет содержать элементы от `0` до `n-1` включительно,
+	 * но так как основное её применение - передача на вход исполнителю,
+	 * где она играет роль индексов в массиве задач, то такое поведение
+	 * является приемлемым
+	 *
+	 * [taskNumber] - кол-во задач для исполнителя (`n`)
 	 */
 	fun generatePermutations(taskNumber: Int): Set<Permutation> {
 		val result = mutableSetOf<Permutation>()

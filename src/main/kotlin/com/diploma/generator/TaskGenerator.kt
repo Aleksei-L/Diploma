@@ -1,4 +1,4 @@
-package com.diploma.generators
+package com.diploma.generator
 
 import com.diploma.data.Task
 import com.diploma.util.GaussArgument
