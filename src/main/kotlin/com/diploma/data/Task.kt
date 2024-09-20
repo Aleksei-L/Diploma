@@ -13,11 +13,13 @@ package com.diploma.data
  * момента времени задача не может быть начата. [startTime]>0
  * - [endTime] - момент времени к которому задача должна быть завершена.
  * Если задача не была завершена к этому моменту начисляется штраф. [startTime]>0
- * - [time] - Время требуемое задаче на выполнение. [time]>0
+ * - [time] - время требуемое задаче на выполнение. [time]>0
+ * - [fine] - штраф за каждую единицу превышения времени [endTime]. [fine]>0
  */
 data class Task(
 	val number: Int,
 	val startTime: Int,
 	val endTime: Int,
-	val time: Int
+	val time: Int,
+	val fine: Int
 )

@@ -12,12 +12,14 @@ class TaskGenerator {
 	 * - [startTimeRange] - диапазон времени начала доступности задачи
 	 * - [endTimeRange] - диапазон времени желаемого завершения задачи
 	 * - [timeRange] - диапазон времени исполнения задачи
+	 * - [fineRange] - диапазон штрафа
 	 */
 	fun generateTasks(
 		taskNumber: Int,
 		startTimeRange: IntRange,
 		endTimeRange: IntRange,
-		timeRange: IntRange
+		timeRange: IntRange,
+		fineRange: IntRange
 	): List<Task> {
 		val tasksList = mutableListOf<Task>()
 
@@ -55,12 +57,25 @@ class TaskGenerator {
 				).toInt()
 			} while (time < timeRange.first || time > timeRange.last)
 
+			/**
+			 * Генерация штрафа за превышение времени выполнения
+			 * задачи до тех пор, пока он не попадёт в отрезок [fineRange]
+			 */
+			var fine: Int
+			do {
+				fine = Random().nextGaussian(
+					((fineRange.first + fineRange.last) / 2).toDouble(),
+					GaussArgument.SIGMA
+				).toInt()
+			} while (fine < fineRange.first || fine > fineRange.last)
+
 			tasksList.addLast(
 				Task(
 					number++,
 					startTime,
 					endTime,
-					time
+					time,
+					fine
 				)
 			)
 		}

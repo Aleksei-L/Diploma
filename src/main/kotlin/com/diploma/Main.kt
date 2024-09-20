@@ -1,8 +1,9 @@
 package com.diploma
 
-import com.diploma.executor.Executor
+import com.diploma.executor.ExecutorWrapper
 import com.diploma.generator.PermutationGenerator
 import com.diploma.generator.TaskGenerator
+import com.diploma.util.TaskNumber.TASK_NUMBER
 
 /**
  * Задача теории расписаний с одним исполнителем
@@ -23,39 +24,25 @@ import com.diploma.generator.TaskGenerator
  * - `x_i >= y_j` ИЛИ `x_j >= y_i`, `i = 1...n` - исполнитель в один момент времени может выполнять только одну работу
  *
  * Как решать:
- * 1) Полный перебор `n!` перестановок O(n!)
- * Критерий нарушения D зависит от Y
- * Минимизируем критерий => находим самую лучшую перестановку
- * Можем не получить решение удовлетворяющее всем ограничениям (называется допустимым) - Тогда уберём 3 ограничение
- * D - вообще говоря должно генерироваться по нормальному распределению
- * 2) Эвристики (например восхождение на холм) O(n^2)
- * Для исходных данных генерируется "Коэффициент" (например (d+D)/t )
- * Сортируем по убыванию => получаем перестановку
+ * 1. Полный перебор `n!` перестановок `O(n!)`
+ * 2. Эвристики (например восхождение на холм) `O(n^2)`
+ * 3. ЭГА
  *
  * Считаем относительное отклонение Д(ельта), например = (F^эвр - F^0)/F^0
  */
 fun main() {
-	val executor by lazy { Executor() }
+	val executorWrapper by lazy { ExecutorWrapper() }
 	val taskGenerator by lazy { TaskGenerator() }
 	val permutationGenerator by lazy { PermutationGenerator() }
 
 	val tasks = taskGenerator.generateTasks(
-		3,
-		1..100,
-		5..10,
-		2..5
+		TASK_NUMBER,
+		1..10,
+		20..40,
+		7..17,
+		5..10
 	)
-	val permutations = permutationGenerator.generatePermutations(3)
+	val permutations = permutationGenerator.generatePermutations(TASK_NUMBER)
 
-	println(permutations)
-	tasks.forEach {
-		println(it)
-	}
-	println()
-
-	var counter = 1
-	for (i in permutations) {
-		val arr = executor.executeTasksByPermutation(tasks, i)
-		println("step: ${counter++}: $arr")
-	}
+	println(executorWrapper.executeAllWithFines(tasks, permutations))
 }

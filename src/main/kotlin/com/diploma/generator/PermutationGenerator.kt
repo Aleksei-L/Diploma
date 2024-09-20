@@ -13,8 +13,8 @@ class PermutationGenerator {
 	 *
 	 * [taskNumber] - кол-во задач для исполнителя (`n`)
 	 */
-	fun generatePermutations(taskNumber: Int): Set<Permutation> {
-		val result = mutableSetOf<Permutation>()
+	fun generatePermutations(taskNumber: Int): List<Permutation> {
+		val result = mutableListOf<Permutation>()
 		val elements = (0..<taskNumber).toMutableList()
 		val indices = IntArray(taskNumber) { 0 }
 
