@@ -1,7 +1,9 @@
 package com.diploma
 
 import com.diploma.executor.ExecutorWrapper
+import com.diploma.generator.NeighborsGenerator
 import com.diploma.generator.PermutationGenerator
+import com.diploma.generator.SinglePermutationGenerator
 import com.diploma.generator.TaskGenerator
 import com.diploma.util.TaskNumber.TASK_NUMBER
 
@@ -45,4 +47,9 @@ fun main() {
 	val permutations = permutationGenerator.generatePermutations(TASK_NUMBER)
 
 	println(executorWrapper.executeAllWithFines(tasks, permutations))
+
+	val startPermutation = SinglePermutationGenerator().generatePermutation(TASK_NUMBER)
+	println(startPermutation)
+	val neighbors = NeighborsGenerator().generateNeighbors(startPermutation)
+	println(neighbors)
 }
