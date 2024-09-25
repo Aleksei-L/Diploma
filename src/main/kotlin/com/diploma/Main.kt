@@ -1,10 +1,13 @@
 package com.diploma
 
+import com.diploma.executor.Executor
 import com.diploma.executor.ExecutorWrapper
 import com.diploma.generator.NeighborsGenerator
 import com.diploma.generator.PermutationGenerator
 import com.diploma.generator.SinglePermutationGenerator
 import com.diploma.generator.TaskGenerator
+import com.diploma.solver.CompleteEnumeration
+import com.diploma.solver.HillClimbing
 import com.diploma.util.TaskNumber.TASK_NUMBER
 
 /**
@@ -26,16 +29,18 @@ import com.diploma.util.TaskNumber.TASK_NUMBER
  * - `x_i >= y_j` ИЛИ `x_j >= y_i`, `i = 1...n` - исполнитель в один момент времени может выполнять только одну работу
  *
  * Как решать:
- * 1. Полный перебор `n!` перестановок `O(n!)`
- * 2. Эвристики (например восхождение на холм) `O(n^2)`
+ * 1. Полный перебор `n!` перестановок
+ * 2. Эвристики (например восхождение на холм)
  * 3. ЭГА
  *
- * Считаем относительное отклонение Д(ельта), например = (F^эвр - F^0)/F^0
+ * Для оценки решения задачи считаем относительное отклонение: `(F^эвр - F^0)/F^0`
  */
 fun main() {
-	val executorWrapper by lazy { ExecutorWrapper() }
+	val executorWrapper by lazy { ExecutorWrapper(Executor()) }
 	val taskGenerator by lazy { TaskGenerator() }
 	val permutationGenerator by lazy { PermutationGenerator() }
+	val neighborsGenerator by lazy { NeighborsGenerator() }
+	val singlePermutationGenerator by lazy { SinglePermutationGenerator() }
 
 	val tasks = taskGenerator.generateTasks(
 		TASK_NUMBER,
@@ -44,12 +49,22 @@ fun main() {
 		7..17,
 		5..10
 	)
-	val permutations = permutationGenerator.generatePermutations(TASK_NUMBER)
 
-	println(executorWrapper.executeAllWithFines(tasks, permutations))
+	val solverList = listOf(
+		CompleteEnumeration(
+			permutationGenerator,
+			executorWrapper
+		),
+		HillClimbing(
+			executorWrapper,
+			neighborsGenerator,
+			singlePermutationGenerator
+		)
+	)
+	val finesList = mutableListOf<Int>()
 
-	val startPermutation = SinglePermutationGenerator().generatePermutation(TASK_NUMBER)
-	println(startPermutation)
-	val neighbors = NeighborsGenerator().generateNeighbors(startPermutation)
-	println(neighbors)
+	for (i in solverList.indices)
+		finesList += solverList[i].solve(tasks)
+
+	println("Относительное отклонение: ${"%.4f".format((finesList[1] - finesList[0]).toDouble() / finesList[0])}")
 }

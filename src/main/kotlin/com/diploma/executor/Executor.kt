@@ -36,7 +36,7 @@ class Executor {
 	 * Возвращает список пар `(x_i, y_i)`, каждая из которых
 	 * характеризует момент начала и момент завершения работы
 	 */
-	private fun executeTasksByPermutation(tasks: List<Task>, permutation: Permutation): List<Pair<Int, Int>> {
+	fun executeTasksByPermutation(tasks: List<Task>, permutation: Permutation): List<Pair<Int, Int>> {
 		val result = mutableListOf<Pair<Int, Int>>()
 
 		for (i in permutation)
