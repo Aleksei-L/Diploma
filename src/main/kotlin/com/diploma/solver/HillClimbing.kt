@@ -26,7 +26,7 @@ class HillClimbing(
 	private val singlePermutationGenerator: SinglePermutationGenerator
 ) : Solver {
 	override fun solve(tasks: List<Task>): Int {
-		var permutation = singlePermutationGenerator.generatePermutation(tasks.size)
+		var permutation = singlePermutationGenerator.singlePermutation
 		var neighbors = neighborsGenerator.generateNeighbors(permutation)
 		var minim = Int.MAX_VALUE
 

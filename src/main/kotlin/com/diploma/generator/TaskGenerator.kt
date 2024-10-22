@@ -6,6 +6,13 @@ import java.util.*
 
 class TaskGenerator {
 	/**
+	 * Сквозной номер задачи
+	 *
+	 * Может изменяться только внутри класса при генерации перестановок в функции [generateTasks]
+	 */
+	private var number = 1
+
+	/**
 	 * Функция генерации списка из n задач для исполнителя
 	 *
 	 * - [taskNumber] - кол-во задач для исполнителя
@@ -81,15 +88,5 @@ class TaskGenerator {
 		}
 
 		return tasksList
-	}
-
-	/**
-	 * Сквозной номер задачи
-	 *
-	 * Может изменяться только внутри класса при генерации перестановок в функции [generateTasks]
-	 */
-	companion object {
-		var number = 1
-			private set
 	}
 }

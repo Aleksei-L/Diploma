@@ -8,7 +8,9 @@ import kotlin.math.max
  * Обёртка над исполнителем, для отслеживания за
  * нарушениями желаемых времён исполнения задач
  */
-class ExecutorWrapper(private val executor: Executor) {
+class ExecutorWrapper {
+	private val executor = Executor()
+
 	/**
 	 * Функция подсчёта суммарного штрафа для заданных списка
 	 * задач и перестановки
@@ -35,16 +37,18 @@ class ExecutorWrapper(private val executor: Executor) {
 	 * Возвращает пару из перестановки, на которой достигнут
 	 * наименьший штраф, и штрафа
 	 */
-	fun executeByAllPermutationsWithFines(tasks: List<Task>, permutations: List<Permutation>): Pair<Permutation, Int> {
+	fun executeByAllPermutationsWithFines(
+		tasks: List<Task>,
+		permutations: List<Permutation>
+	): Pair<Permutation, Int> {
 		val map = executor.executeTasksByPermutations(tasks, permutations)
 		var fineSumMinim = Int.MAX_VALUE
 		lateinit var result: Pair<Permutation, Int>
 
 		for ((permutation, pairs) in map) {
 			var fineSum = 0
-			var index = 0
-			for (j in permutation) {
-				val maxim = max(0, pairs[index++].second - tasks[j].endTime)
+			for ((index, j) in permutation.withIndex()) {
+				val maxim = max(0, pairs[index].second - tasks[j].endTime)
 				fineSum += tasks[j].fine * maxim
 			}
 			if (fineSum < fineSumMinim) {

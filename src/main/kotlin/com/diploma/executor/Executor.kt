@@ -14,6 +14,15 @@ import com.diploma.data.Task
  */
 class Executor {
 	/**
+	 * Шкала тактов времени у исполнителя
+	 *
+	 * Может измениться только внутри класса, причём функция
+	 * [executeTask] только увеличивает время, а функция
+	 * [executeTasksByPermutation] только обнуляет время
+	 */
+	private var time = 0
+
+	/**
 	 * Функция исполнения одной задачи
 	 *
 	 * Возвращает пару `(x_i, y_i)`, которая характеризует
@@ -63,17 +72,5 @@ class Executor {
 			result[i] = executeTasksByPermutation(tasks, i)
 
 		return result
-	}
-
-	/**
-	 * Шкала тактов времени у исполнителя
-	 *
-	 * Может измениться только внутри класса, причём функция
-	 * [executeTask] только увеличивает время, а функция
-	 * [executeTasksByPermutation] только обнуляет время
-	 */
-	companion object {
-		var time = 0
-			private set
 	}
 }

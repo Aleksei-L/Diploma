@@ -1,6 +1,5 @@
 package com.diploma
 
-import com.diploma.executor.Executor
 import com.diploma.executor.ExecutorWrapper
 import com.diploma.generator.NeighborsGenerator
 import com.diploma.generator.PermutationGenerator
@@ -36,11 +35,11 @@ import com.diploma.util.TaskNumber.TASK_NUMBER
  * Для оценки решения задачи считаем относительное отклонение: `(F^эвр - F^0)/F^0`
  */
 fun main() {
-	val executorWrapper by lazy { ExecutorWrapper(Executor()) }
+	val executorWrapper by lazy { ExecutorWrapper() }
 	val taskGenerator by lazy { TaskGenerator() }
 	val permutationGenerator by lazy { PermutationGenerator() }
 	val neighborsGenerator by lazy { NeighborsGenerator() }
-	val singlePermutationGenerator by lazy { SinglePermutationGenerator() }
+	val singlePermutationGenerator by lazy { SinglePermutationGenerator }
 
 	val tasks = taskGenerator.generateTasks(
 		TASK_NUMBER,

@@ -1,24 +1,18 @@
 package com.diploma.generator
 
 import com.diploma.data.Permutation
+import com.diploma.util.TaskNumber.TASK_NUMBER
 
-class SinglePermutationGenerator {
-	private var singlePermutation: Permutation? = null
+/**
+ * Singleton для генерации и хранения начальной перестановки
+ * для алгоритма hill-climbing. Перестановка не изменяется за
+ * всё время работы программы
+ */
+object SinglePermutationGenerator {
+	val singlePermutation: Permutation = generatePermutation()
 
-	/**
-	 * Функция генерации начальной перестановки для алгоритма
-	 * hill-climbing. Перестановка не изменяется за время
-	 * существования конкретного экземпляра класса
-	 */
-	fun generatePermutation(taskNumber: Int): Permutation {
-		if (singlePermutation != null)
-			return singlePermutation!!
-
-		singlePermutation = Permutation(
-			(0..<taskNumber).shuffled()
+	private fun generatePermutation(): Permutation =
+		Permutation(
+			(0..<TASK_NUMBER).shuffled()
 		)
-
-		return singlePermutation!!
-	}
-
 }
