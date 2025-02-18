@@ -1,7 +1,7 @@
 package com.diploma.generator
 
 import com.diploma.data.Task
-import com.diploma.util.GaussArgument
+import com.diploma.util.SIGMA
 import java.util.*
 
 class TaskGenerator {
@@ -38,7 +38,7 @@ class TaskGenerator {
 			do {
 				startTime = Random().nextGaussian(
 					((startTimeRange.first + startTimeRange.last) / 2).toDouble(),
-					GaussArgument.SIGMA
+					SIGMA
 				).toInt()
 			} while (startTime < startTimeRange.first || startTime > startTimeRange.last)
 
@@ -49,7 +49,7 @@ class TaskGenerator {
 			do {
 				endTime = Random().nextGaussian(
 					((endTimeRange.first + endTimeRange.last) / 2).toDouble(),
-					GaussArgument.SIGMA
+					SIGMA
 				).toInt()
 			} while (endTime < endTimeRange.first || endTime > endTimeRange.last)
 
@@ -60,7 +60,7 @@ class TaskGenerator {
 			do {
 				time = Random().nextGaussian(
 					((timeRange.first + timeRange.last) / 2).toDouble(),
-					GaussArgument.SIGMA
+					SIGMA
 				).toInt()
 			} while (time < timeRange.first || time > timeRange.last)
 
@@ -72,7 +72,7 @@ class TaskGenerator {
 			do {
 				fine = Random().nextGaussian(
 					((fineRange.first + fineRange.last) / 2).toDouble(),
-					GaussArgument.SIGMA
+					SIGMA
 				).toInt()
 			} while (fine < fineRange.first || fine > fineRange.last)
 

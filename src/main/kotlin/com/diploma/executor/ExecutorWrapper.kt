@@ -17,7 +17,10 @@ class ExecutorWrapper {
 	 *
 	 * Возвращает штраф
 	 */
-	fun executeByPermutationWithFines(tasks: List<Task>, permutation: Permutation): Int {
+	fun executeByPermutationWithFines(
+		tasks: List<Task>,
+		permutation: Permutation
+	): Int {
 		val result = executor.executeTasksByPermutation(tasks, permutation)
 		var fineSum = 0
 		var index = 0

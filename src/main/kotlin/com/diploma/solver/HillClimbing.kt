@@ -2,8 +2,8 @@ package com.diploma.solver
 
 import com.diploma.data.Task
 import com.diploma.executor.ExecutorWrapper
-import com.diploma.generator.NeighborsGenerator
 import com.diploma.generator.SinglePermutationGenerator
+import com.diploma.generator.generateNeighbors
 
 /**
  * Метод решения задачи теории расписаний при помощи
@@ -21,13 +21,11 @@ import com.diploma.generator.SinglePermutationGenerator
  * минимальный штраф и значение штрафа
  */
 class HillClimbing(
-	private val executorWrapper: ExecutorWrapper,
-	private val neighborsGenerator: NeighborsGenerator,
-	private val singlePermutationGenerator: SinglePermutationGenerator
+	private val executorWrapper: ExecutorWrapper
 ) : Solver {
 	override fun solve(tasks: List<Task>): Int {
-		var permutation = singlePermutationGenerator.singlePermutation
-		var neighbors = neighborsGenerator.generateNeighbors(permutation)
+		var permutation = SinglePermutationGenerator.singlePermutation
+		var neighbors = generateNeighbors(permutation)
 		var minim = Int.MAX_VALUE
 
 		while (true) {
@@ -44,11 +42,11 @@ class HillClimbing(
 
 			if (!fineHasChanged) {
 				println("Решение методом восхождения на холм:")
-				println("Перестановка: $permutation, штраф: $minim\n")
+				println("Перестановка: $permutation, штраф: $minim")
 				break
 			}
 
-			neighbors = neighborsGenerator.generateNeighbors(permutation)
+			neighbors = generateNeighbors(permutation)
 		}
 
 		return minim

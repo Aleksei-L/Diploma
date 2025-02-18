@@ -1,7 +1,7 @@
 package com.diploma.generator
 
 import com.diploma.data.Permutation
-import com.diploma.util.TaskNumber.TASK_NUMBER
+import com.diploma.util.TASK_NUMBER
 
 /**
  * Singleton для генерации и хранения начальной перестановки

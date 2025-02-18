@@ -1,13 +1,11 @@
 package com.diploma
 
 import com.diploma.executor.ExecutorWrapper
-import com.diploma.generator.NeighborsGenerator
-import com.diploma.generator.PermutationGenerator
-import com.diploma.generator.SinglePermutationGenerator
-import com.diploma.generator.TaskGenerator
+import com.diploma.shared.Tasks.tasks
 import com.diploma.solver.CompleteEnumeration
+import com.diploma.solver.EGA
 import com.diploma.solver.HillClimbing
-import com.diploma.util.TaskNumber.TASK_NUMBER
+import kotlin.system.measureTimeMillis
 
 /**
  * Задача теории расписаний с одним исполнителем
@@ -35,35 +33,21 @@ import com.diploma.util.TaskNumber.TASK_NUMBER
  * Для оценки решения задачи считаем относительное отклонение: `(F^эвр - F^0)/F^0`
  */
 fun main() {
-	val executorWrapper by lazy { ExecutorWrapper() }
-	val taskGenerator by lazy { TaskGenerator() }
-	val permutationGenerator by lazy { PermutationGenerator() }
-	val neighborsGenerator by lazy { NeighborsGenerator() }
-	val singlePermutationGenerator by lazy { SinglePermutationGenerator }
-
-	val tasks = taskGenerator.generateTasks(
-		TASK_NUMBER,
-		1..10,
-		20..40,
-		7..17,
-		5..10
-	)
+	val executorWrapper = ExecutorWrapper()
 
 	val solverList = listOf(
-		CompleteEnumeration(
-			permutationGenerator,
-			executorWrapper
-		),
-		HillClimbing(
-			executorWrapper,
-			neighborsGenerator,
-			singlePermutationGenerator
-		)
+		CompleteEnumeration(executorWrapper),
+		HillClimbing(executorWrapper),
+		EGA()
 	)
 	val finesList = mutableListOf<Int>()
 
-	for (i in solverList.indices)
-		finesList += solverList[i].solve(tasks)
+	for (i in solverList.indices) {
+		val executionTime: Long = measureTimeMillis {
+			finesList += solverList[i].solve(tasks)
+		}
+		println("Время исполнения: ${executionTime.toFloat() / 1000f} с.\n")
+	}
 
 	println("Относительное отклонение: ${"%.4f".format((finesList[1] - finesList[0]).toDouble() / finesList[0])}")
 }
