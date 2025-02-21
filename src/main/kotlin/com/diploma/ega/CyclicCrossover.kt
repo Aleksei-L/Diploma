@@ -4,7 +4,12 @@ import com.diploma.data.Permutation
 import com.diploma.util.contains
 
 /**
- * TODO
+ * Оператор кроссовера для ЭГА
+ *
+ * Представляет собой циклический кроссовер
+ *
+ * [parentOne] и [parentTwo] - родительские особи - две перестановки
+ * на основании которых и будет создана ещё одна перестановка (ребёнок)
  */
 fun cyclicCrossover(parentOne: Permutation, parentTwo: Permutation): Permutation {
 	val listParentOne = parentOne.numbersList

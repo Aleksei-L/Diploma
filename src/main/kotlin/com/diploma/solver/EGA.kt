@@ -15,7 +15,8 @@ import com.diploma.util.random
 import kotlin.random.Random
 
 /**
- * TODO
+ * Метод решения задачи теории расписаний при помощи
+ * эволюционно-генетического алгоритма (ЭГА)
  */
 class EGA : Solver {
 	override fun solve(tasks: List<Task>): Int {
@@ -24,10 +25,9 @@ class EGA : Solver {
 		var generationsWithoutImprovement = 0
 		var bestIndividual = population.minBy { it.fitness }
 		var generationNumber = 1
-		var totalGenerations = 1 //TODO remove
 
 		while (true) {
-			if (generationsWithoutImprovement == MAX_GENERATION_NUMBER || totalGenerations == 50)
+			if (generationsWithoutImprovement == MAX_GENERATION_NUMBER)
 				break
 
 			val reproductiveSet = mutableListOf<Individual>()
@@ -36,7 +36,7 @@ class EGA : Solver {
 			println("Поколение №$generationNumber")
 			population.forEach {
 				println(it)
-			}//TODO
+			}
 			println("Лучшая особь - $bestIndividual")
 			println()
 
@@ -80,14 +80,13 @@ class EGA : Solver {
 
 			// Проверка на остановку ЭГА - 10 поколений без улучшения решения
 			val candidate = population.minBy { it.fitness }
-			if (/*bestIndividual == candidate*/bestIndividual.fitness <= candidate.fitness) {
+			if (bestIndividual.fitness <= candidate.fitness) {
 				generationsWithoutImprovement++
 			} else {
 				bestIndividual = candidate
 				generationsWithoutImprovement = 0
 			}
 			generationNumber++
-			totalGenerations++
 		}
 
 		return bestIndividual.fitness

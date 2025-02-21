@@ -4,7 +4,7 @@ import com.diploma.generator.TaskGenerator
 import com.diploma.util.TASK_NUMBER
 
 /**
- * TODO
+ * Singleton для хранения всех сгенерированных задач
  */
 object Tasks {
 	private val taskGenerator = TaskGenerator()

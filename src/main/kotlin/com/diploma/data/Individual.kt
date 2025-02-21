@@ -1,9 +1,12 @@
 package com.diploma.data
 
 /**
- * TODO
- * Представляет собой особь для ЭГА
- * Включает перестановку и штраф на ней
+ * Класс, представляющий особь для ЭГА
+ *
+ * [individual] - [перестановка][com.diploma.data.Permutation]
+ *
+ * [fitness] - штраф достигнутый на данной перестановке.
+ * Вычисляется при помощи [исполнителя][com.diploma.executor.ExecutorWrapper]
  */
 data class Individual(
 	val individual: Permutation,

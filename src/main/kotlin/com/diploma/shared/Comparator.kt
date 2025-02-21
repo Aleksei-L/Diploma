@@ -3,7 +3,10 @@ package com.diploma.shared
 import com.diploma.data.Individual
 
 /**
- * TODO
+ * Компаратор для сравнения двух особей для ЭГА
+ *
+ * При использовании для сортировки отсортирует особи
+ * в возрастающем порядке
  */
 val comparator = Comparator<Individual> { a, b ->
 	when {

@@ -5,7 +5,9 @@ import com.diploma.executor.ExecutorWrapper
 import com.diploma.shared.Tasks.tasks
 
 /**
- * TODO
+ * Оператор отбора для ЭГА
+ *
+ * Использует принцип бета-турнира
  */
 fun betaTournament(population: List<Individual>, individualsCount: Int): List<Individual> {
 	val executorWrapper = ExecutorWrapper()

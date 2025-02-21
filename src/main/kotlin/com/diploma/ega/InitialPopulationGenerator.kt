@@ -8,7 +8,9 @@ import com.diploma.util.POPULATION_SIZE
 import com.diploma.util.TASK_NUMBER
 
 /**
- * TODO
+ * Оператор генерации начальной популяции для ЭГА
+ *
+ * Использует принцип отрицательного ассоциативного скрещивания
  */
 fun generateInitialPopulation(): List<Individual> {
 	val executorWrapper = ExecutorWrapper()

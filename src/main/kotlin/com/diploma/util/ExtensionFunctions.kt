@@ -1,9 +1,11 @@
 package com.diploma.util
 
-import com.diploma.data.Individual
-
 /**
- * TODO
+ * Функция-расширение для поиска значения [value] в
+ * двумерном списке
+ *
+ * Возвращает `true` если элемент был найден и
+ * `false` иначе
  */
 fun List<List<Int>>.contains(value: Int): Boolean {
 	for (list in this) {
@@ -16,11 +18,14 @@ fun List<List<Int>>.contains(value: Int): Boolean {
 }
 
 /**
- * TODO
+ * Функция-расширение для возврата [count] случайных
+ * элементов из списка
+ *
+ * Возвращает элементы в виде списка
  */
-fun List<Individual>.random(count: Int): List<Individual> {
+fun <T> List<T>.random(count: Int): List<T> {
 	val mList = this.toMutableList()
-	val selected = mutableListOf<Individual>()
+	val selected = mutableListOf<T>()
 
 	for (i in 0..<count) {
 		mList.shuffle()
