@@ -90,13 +90,11 @@ class EGA(
 		}
 
 		println(
-			"Решение при помощи ЭГА с оператором селекции ${
-				when (selectionOperator.javaClass.name) {
-					"com.diploma.MainKt\$main\$solverList$1" -> "бета-турнир"
-					"com.diploma.MainKt\$main\$solverList$2" -> "линейная ранговая селекция"
-					"com.diploma.MainKt\$main\$solverList$3" -> "бета-турнир и генерацией начальной популяции при помощи эвристики"
-					else -> ""
-				}
+			"Решение при помощи ЭГА с оператором селекции бета-турнир${
+				if (selectionOperator.javaClass.name == "com.diploma.MainKt\$main\$solverList$2")
+					" и генерацией начальной популяции при помощи эвристики"
+				else
+					""
 			}"
 		)
 		println(bestIndividual)

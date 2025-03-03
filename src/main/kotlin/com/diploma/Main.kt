@@ -2,7 +2,6 @@ package com.diploma
 
 import com.diploma.ega.betaTournament
 import com.diploma.ega.getInitialPopulationByHillClimbing
-import com.diploma.ega.linearRankSelection
 import com.diploma.executor.ExecutorWrapper
 import com.diploma.shared.Tasks.tasks
 import com.diploma.solver.CompleteEnumeration
@@ -43,7 +42,6 @@ fun main() {
 		CompleteEnumeration(executorWrapper),
 		HillClimbing(executorWrapper),
 		EGA(::betaTournament),
-		EGA(::linearRankSelection),
 		EGA(::betaTournament, getInitialPopulationByHillClimbing(executorWrapper))
 	)
 	val finesList = mutableListOf<Int>()
@@ -57,7 +55,7 @@ fun main() {
 			hillClimbingTime = executionTime
 		println(
 			"Время исполнения: ${
-				if (i == 4)
+				if (i == 3)
 					(hillClimbingTime * POPULATION_SIZE + executionTime.toFloat()) / 1000f
 				else
 					executionTime.toFloat() / 1000f
