@@ -2,7 +2,6 @@ package com.diploma.solver
 
 import com.diploma.data.Individual
 import com.diploma.data.Task
-import com.diploma.ega.betaTournament
 import com.diploma.ega.cyclicCrossover
 import com.diploma.ega.generateInitialPopulation
 import com.diploma.ega.pointMutation
@@ -17,14 +16,21 @@ import kotlin.random.Random
 /**
  * Метод решения задачи теории расписаний при помощи
  * эволюционно-генетического алгоритма (ЭГА)
+ *
+ * [selectionOperator] - функция с алгоритмом отбора
+ *
+ * [initialPopulation] - начальная популяция, которую
+ * можно использовать вместо случайной генерации
  */
-class EGA : Solver {
+class EGA(
+	private val selectionOperator: (List<Individual>, Int) -> List<Individual>,
+	private val initialPopulation: MutableList<Individual>? = null
+) : Solver {
 	override fun solve(tasks: List<Task>): Int {
 		val executorWrapper = ExecutorWrapper()
-		val population = generateInitialPopulation().toMutableList()
+		val population = initialPopulation ?: generateInitialPopulation(tasks).toMutableList()
 		var generationsWithoutImprovement = 0
 		var bestIndividual = population.minBy { it.fitness }
-		var generationNumber = 1
 
 		while (true) {
 			if (generationsWithoutImprovement == MAX_GENERATION_NUMBER)
@@ -32,13 +38,6 @@ class EGA : Solver {
 
 			val reproductiveSet = mutableListOf<Individual>()
 			population.sortWith(comparator)
-
-			println("Поколение №$generationNumber")
-			population.forEach {
-				println(it)
-			}
-			println("Лучшая особь - $bestIndividual")
-			println()
 
 			for (i in 0..<(POPULATION_SIZE / 2)) {
 				// Выбор родителей
@@ -71,14 +70,16 @@ class EGA : Solver {
 				generationCoefficient = Random.nextFloat()
 			val g = (generationCoefficient * POPULATION_SIZE).toInt()
 
+			reproductiveSet.sortWith(comparator)
+
 			val individualsForRemove = population.random(g)
-			val individualsForReplace = betaTournament(reproductiveSet, g)
+			val individualsForReplace = selectionOperator(reproductiveSet, g)
 			individualsForRemove.forEach {
 				population.remove(it)
 			}
 			population.addAll(individualsForReplace)
 
-			// Проверка на остановку ЭГА - 10 поколений без улучшения решения
+			// Проверка на остановку
 			val candidate = population.minBy { it.fitness }
 			if (bestIndividual.fitness <= candidate.fitness) {
 				generationsWithoutImprovement++
@@ -86,8 +87,19 @@ class EGA : Solver {
 				bestIndividual = candidate
 				generationsWithoutImprovement = 0
 			}
-			generationNumber++
 		}
+
+		println(
+			"Решение при помощи ЭГА с оператором селекции ${
+				when (selectionOperator.javaClass.name) {
+					"com.diploma.MainKt\$main\$solverList$1" -> "бета-турнир"
+					"com.diploma.MainKt\$main\$solverList$2" -> "линейная ранговая селекция"
+					"com.diploma.MainKt\$main\$solverList$3" -> "бета-турнир и генерацией начальной популяции при помощи эвристики"
+					else -> ""
+				}
+			}"
+		)
+		println(bestIndividual)
 
 		return bestIndividual.fitness
 	}

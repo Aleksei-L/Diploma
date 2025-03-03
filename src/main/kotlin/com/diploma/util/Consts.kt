@@ -15,7 +15,7 @@ package com.diploma.util
  * [MUTATION_PROBABILITY] - Вероятность мутации для ЭГА
  */
 const val SIGMA: Double = 5.0
-const val TASK_NUMBER = 7
+const val TASK_NUMBER = 10
 const val POPULATION_SIZE = 20
-const val MAX_GENERATION_NUMBER = 10
-const val MUTATION_PROBABILITY = 0.1f
+const val MAX_GENERATION_NUMBER = 30
+const val MUTATION_PROBABILITY = 0.4f

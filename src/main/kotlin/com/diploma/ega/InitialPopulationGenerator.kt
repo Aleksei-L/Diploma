@@ -2,8 +2,8 @@ package com.diploma.ega
 
 import com.diploma.data.Individual
 import com.diploma.data.Permutation
+import com.diploma.data.Task
 import com.diploma.executor.ExecutorWrapper
-import com.diploma.shared.Tasks.tasks
 import com.diploma.util.POPULATION_SIZE
 import com.diploma.util.TASK_NUMBER
 
@@ -12,7 +12,9 @@ import com.diploma.util.TASK_NUMBER
  *
  * Использует принцип отрицательного ассоциативного скрещивания
  */
-fun generateInitialPopulation(): List<Individual> {
+fun generateInitialPopulation(
+	tasks:List<Task>
+): List<Individual> {
 	val executorWrapper = ExecutorWrapper()
 	val population = mutableListOf<Individual>()
 

@@ -1,10 +1,14 @@
 package com.diploma
 
+import com.diploma.ega.betaTournament
+import com.diploma.ega.getInitialPopulationByHillClimbing
+import com.diploma.ega.linearRankSelection
 import com.diploma.executor.ExecutorWrapper
 import com.diploma.shared.Tasks.tasks
 import com.diploma.solver.CompleteEnumeration
 import com.diploma.solver.EGA
 import com.diploma.solver.HillClimbing
+import com.diploma.util.POPULATION_SIZE
 import kotlin.system.measureTimeMillis
 
 /**
@@ -38,16 +42,27 @@ fun main() {
 	val solverList = listOf(
 		CompleteEnumeration(executorWrapper),
 		HillClimbing(executorWrapper),
-		EGA()
+		EGA(::betaTournament),
+		EGA(::linearRankSelection),
+		EGA(::betaTournament, getInitialPopulationByHillClimbing(executorWrapper))
 	)
 	val finesList = mutableListOf<Int>()
+	var hillClimbingTime = 0L
 
 	for (i in solverList.indices) {
-		val executionTime: Long = measureTimeMillis {
-			finesList += solverList[i].solve(tasks)
+		val executionTime = measureTimeMillis {
+			finesList.addLast(solverList[i].solve(tasks))
 		}
-		println("Время исполнения: ${executionTime.toFloat() / 1000f} с.\n")
+		if (i == 1)
+			hillClimbingTime = executionTime
+		println(
+			"Время исполнения: ${
+				if (i == 4)
+					(hillClimbingTime * POPULATION_SIZE + executionTime.toFloat()) / 1000f
+				else
+					executionTime.toFloat() / 1000f
+			} с."
+		)
+		println("Относительное отклонение: ${"%.4f".format((finesList[i] - finesList[0]).toDouble() / finesList[0])}\n")
 	}
-
-	println("Относительное отклонение: ${"%.4f".format((finesList[1] - finesList[0]).toDouble() / finesList[0])}")
 }
